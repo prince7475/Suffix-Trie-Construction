@@ -1,0 +1,55 @@
+Write a class for suffix-trie like data structure. 
+The class should have a root property
+The class should support
+  - creation --> called populateSuffixTrieFrom() -> is called in the constructor
+  - searching of string
+  - every string added to the trie should end with "*"
+  
+  populating(string)
+    let node = this.root
+     for letter of string
+      if(!(letter in node)) node[letter] = {}
+      node = node[letter]
+    node[endSymbol] = string
+    
+  -contains(string)
+    let node = this.root
+      for letter of string
+        if(!(letter in node)) return false
+        node = node[letter]
+   
+   return node[endSymbol] === string
+   
+  
+  class SuffixTrie {
+    constructor(string){
+      this.root = {}
+      this.endSymbol = "*"
+      this.populateSuffixTrieFrom(string)
+    }
+    
+   // Time -> O(n)
+   // Space --> O(1)
+    populateSuffixTrieFrom(string){
+       for(let i = 0; i < string.length; i++){
+       let node = this.root
+        for(let j = i; j < string.length;j++){
+        let letter = string[j]
+         if(!(letter in node)) node[letter] = {}
+         node = node[letter]
+        }
+        node[this.endSymbol] = true
+       }
+    }
+    
+    // Time -> O(n)
+   // Space --> O(1)
+    contains(string){
+      let node = this.root
+      for(let letter of string){
+        if(!(letter in node)) return false
+        node = node[letter]
+      }
+      return this.endSymbol in node
+    }
+  }
